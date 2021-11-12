@@ -45,9 +45,9 @@ pipeline {
       stage('Run Docker container on EC2 Instance ') {
              
             steps 
-			{
-                def dockerrun= "docker run -d -p 8003:8080 34341755/samplewebapp"
-		sshagent(['suhith-docker']) {
+	      {
+                 def dockerrun= "docker run -d -p 8003:8080 34341755/samplewebapp"
+		 sshagent(['suhith-docker']) {
   			sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.18.198 ${dockerrun}'
 }
  
