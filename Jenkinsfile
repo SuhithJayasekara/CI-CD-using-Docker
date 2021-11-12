@@ -42,21 +42,18 @@ pipeline {
           }
         }
      
-      stage('Run Docker container on Jenkins Agent') {
+      stage('Run Docker container on EC2 Instance ') {
              
             steps 
 			{
-                sh "docker run -d -p 8003:8080 34341755/samplewebapp"
+                def dockerrun= "docker run -d -p 8003:8080 34341755/samplewebapp"
+		sshagent(['suhith-docker']) {
+  			sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.18.198 ${dockerrun}'
+}
  
             }
         }
- stage('Run Docker container on remote hosts') {
-             
-            steps {
-                sh "docker -H ssh://jenkins@172.31.28.25 run -d -p 8003:8080 nikhilnidhi/samplewebapp"
  
-            }
-        }
     }
 	}
     
